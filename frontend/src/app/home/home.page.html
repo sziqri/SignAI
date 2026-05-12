@@ -1,0 +1,243 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="hdr-inner">
+      <div class="hdr-brand">
+        <div class="hdr-logo">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="9" stroke="white" stroke-width="1.4" fill="none" opacity=".5"/>
+            <ellipse cx="11" cy="11" rx="5" ry="7" fill="white" opacity=".85"/>
+            <circle cx="11" cy="11" r="2.5" fill="#009a88"/>
+          </svg>
+        </div>
+        <div>
+          <div class="hdr-title">IsyaratAI</div>
+          <div class="hdr-sub">Sistem Terjemahan Perubatan</div>
+        </div>
+      </div>
+      <div class="hdr-status">
+        <span class="dot-pulse"></span>
+        <span>Sistem Aktif</span>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="section-tabs">
+    <div class="stab" [class.active]="activeTab === 'doctor'" (click)="switchTab('doctor')">
+      <span class="stab-pip amber"></span>Panel Doktor
+    </div>
+    <div class="stab" [class.active]="activeTab === 'patient'" (click)="switchTab('patient')">
+      <span class="stab-pip teal"></span>Panel Pesakit
+    </div>
+  </div>
+
+  <!-- ===== DOCTOR TAB ===== -->
+  <div class="tab-body" [hidden]="activeTab !== 'doctor'">
+    <p class="panel-intro">Rakam arahan atau ucapan anda. AI akan menyederhanakan teks untuk pesakit memahami.</p>
+
+    <div class="record-zone" [class.is-rec]="isRecording">
+      <button class="mic-btn" (click)="isRecording ? stopRecording() : startRecording()">
+        <div class="mic-ring" [class.pulse]="isRecording">
+          <svg *ngIf="!isRecording" width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <rect x="7.5" y="2" width="7" height="12" rx="3.5" fill="white"/>
+            <path d="M4 11a7 7 0 0014 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <line x1="11" y1="18" x2="11" y2="21" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="7.5" y1="21" x2="14.5" y2="21" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg *ngIf="isRecording" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="5" y="5" width="10" height="10" rx="2.5" fill="white"/>
+          </svg>
+        </div>
+        <span class="mic-label">{{ isRecording ? 'Berhenti' : 'Rakam' }}</span>
+      </button>
+
+      <div class="wave-bars" [class.on]="isRecording">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="rec-hint" *ngIf="!isRecording">Tekan untuk mula rakam dalam Bahasa Melayu.</div>
+      <div class="rec-hint live" *ngIf="isRecording">Sedang merakam... Sila cakap sekarang.</div>
+    </div>
+
+    <div class="field-label">Terjemahan AI → Pesakit</div>
+    <div class="result-card">
+      <div class="result-text">{{ staffText }}</div>
+      <button class="speak-icon-btn" (click)="speakText(staffText)" [disabled]="staffText === 'Menunggu suara doktor...'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 5.5h2.5l3-2.5v8l-3-2.5H2v-3z" fill="currentColor"/>
+          <path d="M10 4a4 4 0 010 8M12.5 2a7 7 0 010 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="quick-row">
+      <span class="quick-label">Balas Pantas</span>
+      <button class="qbtn" (click)="speakText('Saya faham, terima kasih.')">Faham</button>
+      <button class="qbtn" (click)="speakText('Sila ulang semula.')">Ulang</button>
+      <button class="qbtn" (click)="speakText('Tolong berikan ubat.')">Ubat</button>
+      <button class="qbtn" (click)="speakText('Tunggu sebentar.')">Tunggu</button>
+    </div>
+  </div>
+
+  <!-- ===== PATIENT TAB ===== -->
+  <div class="tab-body" [hidden]="activeTab !== 'patient'">
+
+    <div class="patient-grid">
+      <div class="cam-col">
+        <div class="cam-wrap">
+          <video #videoElement autoplay playsinline muted
+            style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;"></video>
+          <canvas #canvasElement
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
+          <div class="cam-badge">
+            <span class="dot-pulse red"></span>LANGSUNG
+          </div>
+        </div>
+      </div>
+
+      <div class="patient-right">
+        <div class="live-card" [class.sign-recording]="isSignRecording">
+          <div class="live-card-label">Isyarat Dikesan</div>
+          <div class="live-word">{{ liveSignTranslation }}</div>
+
+          <!-- Hold ring — only shows while actively recording -->
+          <div class="hold-area" *ngIf="isSignRecording && currentHoldWord && currentHoldWord !== '...'">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <circle cx="26" cy="26" r="20" fill="none" stroke="rgba(0,201,177,0.15)" stroke-width="4"/>
+              <circle cx="26" cy="26" r="20" fill="none" stroke="#00c9b1" stroke-width="4"
+                stroke-linecap="round"
+                [attr.stroke-dasharray]="125.6"
+                [attr.stroke-dashoffset]="125.6 - (125.6 * holdProgress / 100)"
+                transform="rotate(-90 26 26)"
+                style="transition:stroke-dashoffset 0.1s linear"/>
+              <text x="26" y="30" text-anchor="middle" fill="white" font-size="11" font-weight="700">{{ holdProgress | number:'1.0-0' }}%</text>
+            </svg>
+            <div class="hold-lbl">Tahan: <strong>{{ currentHoldWord }}</strong></div>
+          </div>
+
+          <!-- Start / Stop recording button -->
+          <button class="sign-rec-btn"
+            [class.recording]="isSignRecording"
+            (click)="isSignRecording ? stopSignRecording() : startSignRecording()">
+            <span class="sign-rec-icon">
+              <!-- Start icon: circle -->
+              <svg *ngIf="!isSignRecording" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.6"/>
+                <circle cx="7" cy="7" r="3" fill="currentColor"/>
+              </svg>
+              <!-- Stop icon: square -->
+              <svg *ngIf="isSignRecording" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="3" y="3" width="8" height="8" rx="1.5" fill="currentColor"/>
+              </svg>
+            </span>
+            {{ isSignRecording ? 'Henti Rekod' : 'Mula Rekod' }}
+          </button>
+        </div>
+
+        <div class="sent-card">
+          <div class="sent-hdr">
+            <div class="sent-title">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1" y="2" width="12" height="1.8" rx=".9" fill="currentColor"/>
+                <rect x="1" y="6" width="9" height="1.8" rx=".9" fill="currentColor"/>
+                <rect x="1" y="10" width="10.5" height="1.8" rx=".9" fill="currentColor"/>
+              </svg>
+              Pembina Ayat
+            </div>
+            <div class="sent-actions">
+              <button class="icon-btn" (click)="removeLastWord()" [disabled]="builtSentence.length === 0">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10l3-4-3-4h7l-3 4 3 4H2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="none"/></svg>
+              </button>
+              <button class="icon-btn danger" (click)="clearBuiltSentence()" [disabled]="builtSentence.length === 0">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 3h8M4 3V2h4v1M4.5 5v4M7.5 5v4M2.5 3l.7 6.5h5.6l.7-6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="sent-body" [class.complete]="isSentenceComplete" (click)="dismissSelection()">
+            <div class="word-chips" *ngIf="builtSentence.length > 0">
+              <span class="chip"
+                *ngFor="let w of builtSentence; let i = index"
+                [class.selected]="selectedWordIndex === i"
+                (click)="$event.stopPropagation(); tapWordChip(i)">
+                <span class="chip-text">{{ w }}</span>
+                <span class="chip-delete-icon" *ngIf="selectedWordIndex === i">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </span>
+            </div>
+            <div class="sent-empty" *ngIf="builtSentence.length === 0">
+              <span *ngIf="!isSignRecording">Tekan <strong>Mula Rekod</strong> untuk mula tangkap isyarat.</span>
+              <span *ngIf="isSignRecording">Tahan isyarat selama 2 saat untuk tangkap perkataan...</span>
+            </div>
+            <div class="sent-complete-badge" *ngIf="isSentenceComplete">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Ayat Siap
+            </div>
+            <div class="chip-hint" *ngIf="selectedWordIndex >= 0">
+              Tekan sekali lagi untuk padam
+            </div>
+          </div>
+
+          <div class="sent-footer">
+            <div class="sent-hint">
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.1"/><line x1="5.5" y1="4.5" x2="5.5" y2="7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.5" cy="3.2" r=".55" fill="currentColor"/></svg>
+              Tahan isyarat 2 saat untuk tangkap perkataan
+            </div>
+            <button class="speak-sent-btn" (click)="speakBuiltSentence()" [disabled]="builtSentence.length === 0">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 4.5h2.2L7 2v9L3.7 8.5H1.5v-4z" fill="currentColor"/><path d="M9 3.5a4 4 0 010 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+              Sebut Ayat
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dict-card">
+      <div class="dict-hdr">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1.5" y="1.5" width="13" height="13" rx="2.5" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M5 8h6M5 5.5h4M5 10.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Kamus Teks → Isyarat
+      </div>
+      <div class="dict-input-row">
+        <div class="search-wrap">
+          <svg class="search-ico" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <input class="sign-input" [(ngModel)]="textToSearch"
+            placeholder="Taip ayat (cth: saya sakit kepala)..."
+            (keyup.enter)="searchSignSentence()"/>
+        </div>
+        <button class="cari-btn" (click)="searchSignSentence()">Cari Isyarat</button>
+      </div>
+
+      <div *ngIf="signImageResults.length > 0">
+        <div class="sign-results-label">Isyarat untuk: <em>{{ lastSearchedSentence }}</em></div>
+        <div class="sign-grid">
+          <div class="sign-item" *ngFor="let item of signImageResults">
+            <span class="sign-lbl">{{ item.word }}</span>
+            <img *ngIf="item.found" [src]="item.path" class="sign-img"/>
+            <div *ngIf="!item.found" class="sign-missing">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M6 12l6-6M12 12L6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+              Tiada Gambar
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-spacer"></div>
+
+</ion-content>

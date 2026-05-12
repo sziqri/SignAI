@@ -1,0 +1,855 @@
+// ============================================================
+// IsyaratAI — Medical Sign Language App
+// Aesthetic: Deep navy + teal, Plus Jakarta Sans, glass cards
+// ============================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+// --- Tokens ---
+$navy:   #0a1628;
+$navy2:  #0f2040;
+$navy3:  #162a52;
+$teal:   #00c9b1;
+$teal2:  #00a896;
+$amber:  #f6b93b;
+$red:    #e84040;
+$glass:  rgba(255,255,255,0.05);
+$glass2: rgba(255,255,255,0.09);
+$border: rgba(255,255,255,0.08);
+$border2:rgba(255,255,255,0.14);
+$t1: #f0f6ff;
+$t2: rgba(240,246,255,0.7);
+$t3: rgba(240,246,255,0.38);
+$t4: rgba(240,246,255,0.2);
+
+// --- Base ---
+* { box-sizing: border-box; }
+
+ion-app, ion-router-outlet, .ion-page {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+ion-header ion-toolbar {
+  --background: #{$navy2};
+  --border-color: #{$border};
+  padding: 0;
+}
+
+ion-content {
+  --background: #{$navy};
+  --color: #{$t1};
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+// ============================================================
+// HEADER
+// ============================================================
+
+.hdr-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+}
+
+.hdr-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hdr-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, $teal, $teal2);
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba($teal, 0.35);
+}
+
+.hdr-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: $t1;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.hdr-sub {
+  font-size: 10px;
+  color: $t4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+.hdr-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba($teal, 0.1);
+  border: 1px solid rgba($teal, 0.22);
+  border-radius: 20px;
+  padding: 5px 13px;
+  font-size: 11px;
+  font-weight: 600;
+  color: $teal;
+}
+
+// ============================================================
+// PULSE DOTS
+// ============================================================
+
+.dot-pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $teal;
+  animation: dot-blink 2s ease-in-out infinite;
+
+  &.red { background: $red; }
+  &.teal { background: $teal; }
+}
+
+@keyframes dot-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba($teal, 0.5); }
+  50%       { opacity: 0.5; box-shadow: 0 0 0 5px rgba($teal, 0); }
+}
+
+// ============================================================
+// SECTION TABS
+// ============================================================
+
+.section-tabs {
+  display: flex;
+  background: $navy2;
+  border-bottom: 1px solid $border;
+}
+
+.stab {
+  flex: 1;
+  padding: 13px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  color: $t3;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: color 0.2s, border-color 0.2s;
+
+  &.active {
+    color: $teal;
+    border-bottom-color: $teal;
+  }
+}
+
+.stab-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.amber { background: $amber; }
+  &.teal  { background: $teal; }
+}
+
+// ============================================================
+// TAB BODY
+// ============================================================
+
+.tab-body {
+  padding: 18px 16px 28px;
+}
+
+.panel-intro {
+  font-size: 12px;
+  color: $t3;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+// ============================================================
+// DOCTOR — RECORDING
+// ============================================================
+
+.record-zone {
+  background: $glass;
+  border: 1px solid $border2;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  transition: border-color 0.3s, background 0.3s;
+
+  &.is-rec {
+    border-color: rgba($red, 0.45);
+    background: rgba($red, 0.04);
+  }
+}
+
+.mic-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.mic-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, $red, darken($red, 12%));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 20px rgba($red, 0.4);
+  transition: transform 0.15s;
+
+  &:active { transform: scale(0.93); }
+
+  &.pulse {
+    animation: mic-pulse 1.2s ease-out infinite;
+  }
+}
+
+@keyframes mic-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba($red, 0.55), 0 5px 20px rgba($red, 0.4); }
+  70%  { box-shadow: 0 0 0 16px rgba($red, 0), 0 5px 20px rgba($red, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba($red, 0), 0 5px 20px rgba($red, 0.4); }
+}
+
+.mic-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: $t1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.wave-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 36px;
+
+  span {
+    display: block;
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background: rgba($red, 0.3);
+    transition: background 0.3s;
+  }
+
+  &.on span {
+    background: rgba($red, 0.65);
+    animation: bar-wave 0.75s ease-in-out infinite;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.1s; }
+    &:nth-child(3) { animation-delay: 0.2s; }
+    &:nth-child(4) { animation-delay: 0.1s; }
+    &:nth-child(5) { animation-delay: 0s; }
+  }
+}
+
+@keyframes bar-wave {
+  0%, 100% { height: 8px; }
+  50%       { height: 30px; }
+}
+
+.rec-hint {
+  flex: 1;
+  font-size: 12px;
+  color: $t3;
+  line-height: 1.55;
+
+  &.live { color: rgba($t1, 0.75); }
+}
+
+// ============================================================
+// DOCTOR — RESULT CARD
+// ============================================================
+
+.field-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: $t4;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 9px;
+}
+
+.result-card {
+  background: $glass;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 72px;
+  margin-bottom: 16px;
+}
+
+.result-text {
+  flex: 1;
+  font-size: 14px;
+  color: $t1;
+  line-height: 1.6;
+}
+
+.speak-icon-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba($teal, 0.1);
+  border: 1px solid rgba($teal, 0.28);
+  color: $teal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover   { background: rgba($teal, 0.22); }
+  &:disabled { opacity: 0.3; cursor: not-allowed; }
+}
+
+// ============================================================
+// DOCTOR — QUICK REPLIES
+// ============================================================
+
+.quick-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quick-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: $t4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 2px;
+}
+
+.qbtn {
+  background: $glass;
+  border: 1px solid $border2;
+  border-radius: 20px;
+  color: $t2;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba($amber, 0.1);
+    border-color: rgba($amber, 0.3);
+    color: $amber;
+  }
+}
+
+// ============================================================
+// PATIENT — LAYOUT
+// ============================================================
+
+.patient-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================================
+// PATIENT — CAMERA
+// ============================================================
+
+.cam-wrap {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111827;
+  border: 1.5px solid $border2;
+  width: 100%;
+  padding-top: 75%; // 4:3 ratio — creates real height for absolute children
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.cam-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba($navy, 0.78);
+  border: 1px solid $border2;
+  border-radius: 20px;
+  padding: 4px 11px;
+  font-size: 10px;
+  font-weight: 700;
+  color: $t1;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+// ============================================================
+// PATIENT — RIGHT COLUMN
+// ============================================================
+
+.patient-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// Sentence builder card
+.sent-card {
+  font-size: 10px;
+  color: $teal;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.live-card-label {
+  font-size: 10px;
+  color: $teal;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.live-word {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 12px;
+  text-shadow: 0 0 28px rgba($teal, 0.22);
+}
+
+.hold-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hold-lbl {
+  font-size: 11px;
+  color: $t3;
+  strong { color: $t1; }
+}
+
+// Start / Stop sign recording button
+.sign-rec-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid rgba($teal, 0.35);
+  background: rgba($teal, 0.1);
+  color: $teal;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba($teal, 0.2);
+    border-color: rgba($teal, 0.55);
+  }
+
+  &.recording {
+    border-color: rgba($red, 0.5);
+    background: rgba($red, 0.12);
+    color: lighten($red, 10%);
+    animation: rec-pulse 1.8s ease-in-out infinite;
+
+    &:hover {
+      background: rgba($red, 0.22);
+    }
+  }
+}
+
+.sign-rec-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+@keyframes rec-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba($red, 0.35); }
+  50%       { box-shadow: 0 0 0 6px rgba($red, 0); }
+}
+
+// Live card glows green border when recording is active
+.live-card {
+  background: linear-gradient(145deg, $navy3, #1a3366);
+  border: 1px solid rgba($teal, 0.22);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &.sign-recording {
+    border-color: rgba($teal, 0.6);
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba($teal, 0.15), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  
+  background: $glass;
+  border: 1px solid $border;
+  border-radius: 14px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.sent-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-bottom: 1px solid $border;
+}
+
+.sent-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $t1;
+}
+
+.sent-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 29px;
+  height: 29px;
+  border-radius: 8px;
+  background: $glass;
+  border: 1px solid $border;
+  color: $t3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+
+  &:hover { background: $glass2; color: $t1; }
+
+  &.danger:hover {
+    background: rgba($red, 0.12);
+    border-color: rgba($red, 0.3);
+    color: $red;
+  }
+
+  &:disabled { opacity: 0.25; cursor: not-allowed; }
+}
+
+.sent-body {
+  padding: 13px 14px;
+  min-height: 72px;
+  transition: background 0.3s;
+
+  &.complete { background: rgba($teal, 0.04); }
+}
+
+.word-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.chip {
+  background: rgba($teal, 0.12);
+  border: 1px solid rgba($teal, 0.28);
+  color: $teal;
+  border-radius: 20px;
+  padding: 4px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  animation: chip-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+
+  &:hover {
+    background: rgba($teal, 0.2);
+  }
+
+  &.selected {
+    background: rgba($red, 0.15);
+    border-color: rgba($red, 0.5);
+    color: lighten($red, 15%);
+    transform: scale(1.06);
+  }
+}
+
+.chip-delete-icon {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.chip-hint {
+  margin-top: 8px;
+  font-size: 10px;
+  color: rgba($red, 0.6);
+  font-style: italic;
+}
+
+@keyframes chip-in {
+  from { transform: scale(0.65); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.sent-empty {
+  font-size: 12px;
+  color: $t4;
+  line-height: 1.6;
+}
+
+.sent-complete-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba($teal, 0.1);
+  border: 1px solid rgba($teal, 0.3);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: $teal;
+  letter-spacing: 0.04em;
+  margin-top: 9px;
+}
+
+.sent-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 14px;
+  border-top: 1px solid $border;
+  gap: 8px;
+}
+
+.sent-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font-size: 10px;
+  color: $t4;
+  flex: 1;
+  line-height: 1.45;
+  padding-top: 1px;
+}
+
+.speak-sent-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, $teal, $teal2);
+  border: none;
+  border-radius: 9px;
+  color: $navy;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 8px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  box-shadow: 0 3px 14px rgba($teal, 0.38);
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba($teal, 0.48);
+  }
+
+  &:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+}
+
+// ============================================================
+// DICTIONARY
+// ============================================================
+
+.dict-card {
+  background: $glass;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 4px;
+}
+
+.dict-hdr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: $t1;
+  margin-bottom: 14px;
+}
+
+.dict-input-row {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.search-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.search-ico {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $t4;
+  pointer-events: none;
+}
+
+.sign-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid $border2;
+  border-radius: 10px;
+  color: $t1;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  padding: 10px 12px 10px 34px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &::placeholder { color: $t4; }
+  &:focus { border-color: rgba($teal, 0.5); }
+}
+
+.cari-btn {
+  background: rgba($teal, 0.12);
+  border: 1px solid rgba($teal, 0.28);
+  border-radius: 10px;
+  color: $teal;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s;
+
+  &:hover {
+    background: rgba($teal, 0.22);
+    border-color: rgba($teal, 0.45);
+  }
+}
+
+.sign-results-label {
+  font-size: 12px;
+  color: $t3;
+  margin-bottom: 12px;
+
+  em { color: $t1; font-style: normal; font-weight: 700; }
+}
+
+.sign-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sign-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: chip-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sign-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: $t3;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.sign-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1.5px solid rgba($teal, 0.32);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.sign-missing {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  border: 2px dashed rgba($red, 0.32);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: rgba($red, 0.55);
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  padding: 6px;
+}
+
+// ============================================================
+// BOTTOM SPACER
+// ============================================================
+
+.bottom-spacer {
+  height: 60px;
+}
