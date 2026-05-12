@@ -5,44 +5,44 @@ SmartSign AI is a real-time, bidirectional translation system designed to bridge
 By utilizing computer vision, machine learning, and advanced large language models, the system translates Malaysian Sign Language (BIM) into text, and simplifies complex medical instructions from doctors into easy-to-understand text and speech.
 
 ## Core Features
-* ** Doctor Panel (Speech & Simplification)**
+## Doctor Panel (Speech & Simplification)
 Speech-to-Text Transcription: Doctors can record instructions directly through the app using Google Cloud Speech-to-Text.
 
-AI Medical Simplification: Integrates Gemini 2.5 Flash to automatically translate complex medical jargon into simplified, easy-to-understand language tailored for deaf patients.
+* **AI Medical Simplification:** Integrates Gemini 2.5 Flash to automatically translate complex medical jargon into simplified, easy-to-understand language tailored for deaf patients.
 
-Text-to-Speech (TTS): Plays back simplified instructions using Google Cloud TTS.
+* **Text-to-Speech (TTS):** Plays back simplified instructions using Google Cloud TTS.
 
-Quick Replies: Pre-configured quick response buttons (e.g., "Faham", "Tunggu", "Ubat") for rapid communication.
+* **Quick Replies:** Pre-configured quick response buttons (e.g., "Faham", "Tunggu", "Ubat") for rapid communication.
 
-* ** Patient Panel (Sign Language Detection)**
-Real-Time Sign Translation: Streams live camera feed via WebSockets to the backend, utilizing MediaPipe Holistic and a custom Random Forest model (258 spatial features) to detect and translate signs instantly.
+## Patient Panel (Sign Language Detection)
+* **Real-Time Sign Translation:** Streams live camera feed via WebSockets to the backend, utilizing MediaPipe Holistic and a custom Random Forest model (258 spatial features) to detect and translate signs instantly.
 
-Smart Sentence Builder: Patients can hold a sign for 2 seconds to capture it, building full sentences word-by-word.
+* **Smart Sentence Builder:** Patients can hold a sign for 2 seconds to capture it, building full sentences word-by-word.
 
-Text-to-Sign Dictionary: Allows patients to type a phrase and retrieve the corresponding sign language visual guides.
+* **Text-to-Sign Dictionary:** Allows patients to type a phrase and retrieve the corresponding sign language visual guides.
 
 ## Tech Stack
-Frontend: Ionic Framework, HTML/SCSS, TypeScript
+* **Frontend:** Ionic Framework, HTML/SCSS, TypeScript
 
-Backend: FastAPI, WebSockets (for ultra-low latency inference), Uvicorn
+* **Backend:** FastAPI, WebSockets (for ultra-low latency inference), Uvicorn
 
-Computer Vision: OpenCV, MediaPipe Holistic
+* **Computer Vision:** OpenCV, MediaPipe Holistic
 
-Machine Learning: Scikit-Learn (Random Forest Classifier), Pandas, Joblib
+* **Machine Learning:** Scikit-Learn (Random Forest Classifier), Pandas, Joblib
 
-Cloud AI Services: Google Cloud Speech-to-Text, Google Cloud Text-to-Speech, Google Gemini API
+* **Cloud AI Services:** Google Cloud Speech-to-Text, Google Cloud Text-to-Speech, Google Gemini API
 
 ## Project Architecture
-main.py: The core FastAPI server handling WebSocket streams for real-time inference, and HTTP endpoints for Google Cloud & Gemini integrations.
+* **main.py:** The core FastAPI server handling WebSocket streams for real-time inference, and HTTP endpoints for Google Cloud & Gemini integrations.
 
-train_holistic.py: Training script that ingests the 258-feature spatial dataset (holistic_medical_data.csv) and outputs the optimized holistic_medical_model.pkl Random Forest model.
+* **train_holistic.py:** Training script that ingests the 258-feature spatial dataset (holistic_medical_data.csv) and outputs the optimized holistic_medical_model.pkl Random Forest model.
 
-track.py: A dataset visualization and extraction tool that overlays MediaPipe pose and hand landmarks on training videos.
+* **track.py:** A dataset visualization and extraction tool that overlays MediaPipe pose and hand landmarks on training videos.
 
-home.page.html: The interactive Ionic frontend UI, featuring dynamic dual-panel layouts for both doctors and patients.
+* **home.page.html:** The interactive Ionic frontend UI, featuring dynamic dual-panel layouts for both doctors and patients.
 
 ## Setup & Installation
-Step 1: Backend Setup (Python)
+**Step 1: Backend Setup (Python)**
 
 Clone the repository and install the backend dependencies.
 
@@ -82,7 +82,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/gcp-service-account.json"
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Step 2: Frontend Setup (Ionic)
+**Step 2: Frontend Setup (Ionic)**
 
 Open a new terminal window to start the Ionic frontend.
 
