@@ -1,4 +1,4 @@
-#SmartSign AI - Medical Sign Language Translation System
+# SmartSign AI - Medical Sign Language Translation System
 ## Project Overview
 SmartSign AI is a real-time, bidirectional translation system designed to bridge the communication gap between healthcare professionals and deaf or hard-of-hearing patients.
 
