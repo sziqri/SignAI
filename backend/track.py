@@ -52,7 +52,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                 
                 image_rgb.flags.writeable = True
                 
-                # --- DRAWING THE SKELETON ---
+                # DRAWING THE SKELETON
                 # Draw Body Pose
                 if results.pose_landmarks:
                     mp_drawing.draw_landmarks(
