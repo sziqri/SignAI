@@ -6,16 +6,16 @@ import os
 import pandas as pd
 
 # 1. Initialize MediaPipe Hands
-# We use the explicitly imported module here
+# I use the explicitly imported module here
 hands = mp_hands_module.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5)
 
 DATA_DIR = './dataset'
 dataset_rows = []
 
-# FIXED: Added the quotation marks back!
+
 print("Starting extraction process...")
 
-# 2. Loop through each medical sign folder (sakit, ubat, doktor, etc.)
+# 2. Loop through each medical sign folder 
 for sign_label in os.listdir(DATA_DIR):
     sign_folder_path = os.path.join(DATA_DIR, sign_label)
     
