@@ -35,25 +35,25 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                 image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results = holistic.process(image_rgb)
                 
-                # --- 1. POSE LANDMARKS (132 points) ---
+                # 1. POSE LANDMARKS (132 points) 
                 if results.pose_landmarks:
                     pose = np.array([[res.x, res.y, res.z, res.visibility] for res in results.pose_landmarks.landmark]).flatten()
                 else:
                     pose = np.zeros(33 * 4)
                     
-                # --- 2. LEFT HAND LANDMARKS (63 points) ---
+                # 2. LEFT HAND LANDMARKS (63 points) 
                 if results.left_hand_landmarks:
                     lh = np.array([[res.x, res.y, res.z] for res in results.left_hand_landmarks.landmark]).flatten()
                 else:
                     lh = np.zeros(21 * 3)
                     
-                # --- 3. RIGHT HAND LANDMARKS (63 points) ---
+                # 3. RIGHT HAND LANDMARKS (63 points) 
                 if results.right_hand_landmarks:
                     rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten()
                 else:
                     rh = np.zeros(21 * 3)
                     
-                # Concatenate all arrays into one giant flat array of 258 numbers
+                # combine all arrays into one giant flat array of 258 numbers
                 row_data = np.concatenate([pose, lh, rh])
                 
                 # Convert into a dictionary for Pandas
