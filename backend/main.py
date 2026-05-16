@@ -20,10 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- 1. LOAD YOUR UPGRADED HOLISTIC MODEL ---
+# 1. LOAD YOUR HOLISTIC MODEL
 print("Loading Holistic AI Model...")
 try:
-    # IMPORTANT: This must be the new model trained on 258 features!
+    
     model = joblib.load('holistic_medical_model.pkl')
     print("Model loaded successfully!")
 except Exception as e:
@@ -32,7 +32,7 @@ except Exception as e:
 # Reconstruct the exact 258 column names used during training (f0 to f257)
 feature_names = [f'f{i}' for i in range(258)]
 
-# --- 2. WEBSOCKET ENDPOINT (With Crash Protection) ---
+# 2. WEBSOCKET ENDPOINT (With Crash Protection)
 @app.websocket("/ws/predict-sign")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -57,7 +57,7 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         print("Ionic App Disconnected.")
 
-# --- 3. STANDARD HTTP ENDPOINTS (Audio Features) ---
+# 3. STANDARD HTTP ENDPOINTS (Audio Features)
 @app.post("/api/text-to-speech")
 async def generate_speech(text: str):
     try:
