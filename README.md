@@ -4,6 +4,8 @@ SmartSign AI is a real-time, bidirectional translation system designed to bridge
 
 By utilizing computer vision, machine learning, and advanced large language models, the system translates Malaysian Sign Language (BIM) into text, and simplifies complex medical instructions from doctors into easy-to-understand text and speech.
 
+https://youtu.be/pYhBEDvwMCM
+
 # Core Features
 ## Doctor Panel (Speech & Simplification) [not completed yet]
 Speech-to-Text Transcription: Doctors can record instructions directly through the app using Google Cloud Speech-to-Text.
