@@ -101,6 +101,8 @@ ionic serve
 ```
 
 ## Model Training (Optional)
+The .pkl file can be downloaded at: https://drive.google.com/drive/folders/1YX18cnlfJ31SEqs1opmwI8uLLsUzlWXG?usp=sharing
+or
 If you wish to retrain the holistic model with new signs:
 
 Gather video data and use track.py to verify landmark extraction.
